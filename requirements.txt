@@ -1,0 +1,19 @@
+# Core pipeline. Versions are floors, not pins: Colab upgrades these from under
+# you and pinning exact versions there causes more breakage than it prevents.
+numpy>=1.24
+scipy>=1.10
+scikit-learn>=1.3
+matplotlib>=3.7
+pandas>=2.0
+
+# Stages 2 and 5 only (generation and the CodeBERT classifier). The data,
+# execution and labeling stages run on the standard library plus the above,
+# which is why they work on a laptop with no GPU.
+torch>=2.1
+transformers>=4.40
+datasets>=2.18          # optional: src/data.py falls back to the upstream
+                        # GitHub files when the HF hub is unreachable
+accelerate>=0.28
+
+# Tests
+pytest>=8.0

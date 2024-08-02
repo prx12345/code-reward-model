@@ -1,0 +1,25 @@
+{
+  "n_candidates": 1600,
+  "n_problems": 200,
+  "pass_rate": 0.43,
+  "positive_class": "pass",
+  "minority_fraction": 0.43,
+  "outcome_counts": {
+    "pass": 688,
+    "assertion_failure": 374,
+    "syntax_error": 270,
+    "exception": 256,
+    "timeout": 12
+  },
+  "outcome_fractions": {
+    "pass": 0.43,
+    "assertion_failure": 0.2338,
+    "syntax_error": 0.1688,
+    "exception": 0.16,
+    "timeout": 0.0075
+  },
+  "problems_all_candidates_pass": 0,
+  "problems_no_candidate_passes": 1,
+  "problems_mixed": 199,
+  "harness_errors": 0
+}
