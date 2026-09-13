@@ -1,29 +1,4 @@
-"""CodeBERT binary classifier over ``[problem] </s> [code]``.
-
-Three decisions that need defending:
-
-**1. Input construction.** The problem statement is capped at
-``PROBLEM_TOKEN_BUDGET`` (128) tokens and the code gets the rest. Encoding the
-pair with a naive ``truncation="longest_first"`` would let a long HumanEval
-docstring eat the code, which is the only part we actually need to judge.
-
-**2. Long code: head-tail truncation, not head truncation.** The default
-everywhere is to keep the first 512 tokens and drop the tail. For this task
-that is close to the worst possible choice: a function's `return` statement,
-its base case, and its off-by-one are usually at the *end*. We keep the first
-~60% and the last ~40% of the code budget and splice them, which preserves
-both the signature and the return path. The fraction of examples affected is
-measured and reported rather than assumed to be small.
-
-**3. Weighted loss.** ``pos_weight = n_negative / n_positive`` from the
-training split, applied to ``BCEWithLogitsLoss``. On a balanced set this is
-~1.0 and changes nothing; on a skewed one it stops the model collapsing to the
-majority class. One code path either way.
-
-Checkpointing: model + optimizer + scheduler + step + RNG state are written to
-``models/`` every ``CHECKPOINT_EVERY_STEPS`` steps and at every epoch end. A
-killed Colab session resumes from the last checkpoint.
-"""
+"""CodeBERT over [problem] </s> [code]. Head-tail truncation, checkpoint/resume."""
 
 from __future__ import annotations
 
@@ -64,7 +39,11 @@ def head_tail_truncate(token_ids: list[int], budget: int,
 
 
 class PairEncoder:
-    """Encodes ``(problem, code)`` into fixed-budget CodeBERT inputs."""
+    """Encodes (problem, code) into CodeBERT inputs.
+
+    Problem gets 128 tokens, code gets the rest. Naive longest_first
+    truncation would let a long HumanEval docstring eat the code.
+    """
 
     def __init__(self, tokenizer: Any, max_length: int | None = None,
                  problem_budget: int | None = None) -> None:

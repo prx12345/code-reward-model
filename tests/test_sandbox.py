@@ -1,11 +1,4 @@
-"""Executor tests -- isolation and timeout behaviour above all.
-
-These are the tests that matter most in this repo. Every label in the dataset
-is produced by this component; if it mislabels a hang as a failure, or lets a
-runaway candidate take down the session, the dataset is wrong or the run never
-finishes. They are also the tests that would catch a regression introduced by
-someone "simplifying" the sandbox later.
-"""
+"""Executor tests. Every label depends on this, so it gets the most attention."""
 
 import time
 

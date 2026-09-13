@@ -1,20 +1,6 @@
-"""Stage 3 -- execute every candidate against the real tests to produce labels.
+"""Run every candidate against the real tests and record how it failed.
 
-This is the part that makes the dataset ours. Everything upstream is public;
-the ``(problem, code) -> did it actually pass`` mapping is produced here by
-running the code.
-
-Properties that matter:
-
-* **Resumable.** Results are appended to JSONL one candidate at a time and
-  keyed by ``candidate_id``. Restarting skips whatever is already on disk.
-* **Parallel but still isolated.** Workers are threads, but each thread's work
-  is a *separate sandboxed subprocess*, so parallelism does not weaken
-  isolation -- it just overlaps the interpreter start-up cost.
-* **Typed outcomes.** ``pass`` / ``assertion_failure`` / ``exception`` /
-  ``timeout`` / ``syntax_error`` / ``memory_exceeded`` / ``harness_error``.
-  The binary label is ``outcome == "pass"``; the outcome itself is what the
-  error analysis needs.
+This is where the labels come from. Resumable, keyed by candidate_id.
 """
 
 from __future__ import annotations

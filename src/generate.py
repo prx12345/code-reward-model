@@ -1,15 +1,4 @@
-"""Stage 2 -- sample N candidate solutions per problem from a code LLM.
-
-Resumability model: one JSONL line per candidate, flushed immediately. On
-restart we count how many candidates each problem already has and top up only
-the shortfall, so an interrupted run never re-does finished work and never
-leaves a problem with a partial sample set.
-
-The generation config is written as the first line of the output file
-(``record_type: "meta"``) so a generations file is self-describing -- you can
-hand someone the file alone and they can tell which model, temperature and
-seed produced it.
-"""
+"""Sample N candidates per problem. Resumable: tops up whatever is on disk."""
 
 from __future__ import annotations
 

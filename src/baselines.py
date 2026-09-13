@@ -1,22 +1,4 @@
-"""Baselines, fit before the transformer so the transformer has a bar to clear.
-
-Three of them, in increasing order of how much they know about code:
-
-1. **Majority class.** Predicts the training pass rate for everything. AUC is
-   0.5 by construction; its job is to show what accuracy alone is worth on an
-   imbalanced set, which is the number people accidentally report as a result.
-2. **TF-IDF over code tokens + logistic regression.** Bag of identifiers and
-   operators. Catches "code containing `TODO` fails", "code that calls
-   `sorted` on this kind of problem passes", and other lexical correlations.
-3. **Static features + logistic regression.** Eighteen numbers from
-   `src/features.py`, most importantly whether `ast.parse` succeeds -- code
-   that does not compile cannot pass, so this baseline gets every syntax error
-   for free. If CodeBERT does not clearly beat this, its only advantage over
-   `ast.parse` is cost.
-
-All three are fit on train only. All three output calibrated-ish probabilities
-so the calibration plot can compare them honestly.
-"""
+"""Majority class, TF-IDF + LR, static features + LR. Fit before the transformer."""
 
 from __future__ import annotations
 

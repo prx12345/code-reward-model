@@ -1,4 +1,4 @@
-"""Split construction and the leakage guards -- the easiest place to fake a result."""
+"""Split construction and the leak guards."""
 
 import pytest
 

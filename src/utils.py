@@ -1,13 +1,4 @@
-"""Small shared helpers: seeding, JSONL IO, resumable checkpointing, logging.
-
-The checkpointing model used everywhere in this repo is deliberately the
-dumbest one that survives a Colab session dying mid-stage:
-
-    append-only JSONL + a stable record id + "skip ids already on disk"
-
-No sqlite, no lock files, no resume manifests. A partially written final line
-is the only failure mode, and :func:`read_jsonl` drops it (see ``tolerant``).
-"""
+"""Seeding, JSONL IO, and the append-only checkpointing used by every stage."""
 
 from __future__ import annotations
 
@@ -97,24 +88,12 @@ def write_jsonl(path: str | Path, records: Iterable[dict[str, Any]]) -> None:
 
 
 class JsonlAppender:
-    """Thread-safe append-only JSONL writer, one open-append-close per record.
+    """Append-only JSONL writer. Opens and closes the file for every record.
 
-    Re-opening the file for every record looks wasteful and is not: the work
-    between records is a model forward pass or a sandboxed subprocess, each
-    three to four orders of magnitude more expensive than an `open()`. What it
-    buys is worth far more than the microseconds:
-
-    * a crash at any instant leaves a complete file, never a half-flushed one;
-    * no file descriptor is held across a `fork`/`exec`, which matters on
-      network and FUSE-backed filesystems (Google Drive mounts in Colab,
-      overlay mounts in containers) where a long-lived descriptor can be
-      invalidated out from under the process -- observed as
-      `OSError: [Errno 9] Bad file descriptor` mid-run, hours in;
-    * another process can safely read or tail the file while it grows.
-
-    `os.O_APPEND` makes each write atomic for lines under PIPE_BUF, so the
-    lock only serialises this process's threads and the file stays valid even
-    if two processes append at once.
+    Looks wasteful, isn't: each record costs a subprocess or a forward pass,
+    so the open() is noise. In return a crash never leaves a half-written
+    file, and no fd is held across a fork -- which bit me on a FUSE mount
+    (Errno 9, an hour into a run).
     """
 
     def __init__(self, path: str | Path) -> None:

@@ -1,4 +1,4 @@
-"""Static features, code extraction from model replies, and long-code truncation."""
+"""Static features, code extraction from replies, truncation, metrics."""
 
 import pytest
 

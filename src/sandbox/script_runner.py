@@ -1,21 +1,6 @@
-"""Child process that executes one candidate solution against its unit tests.
+"""Child process. Reads a job on stdin, writes the outcome to argv[1].
 
-Launched by :class:`script_sandbox.ScriptSandbox` as::
-
-    python -I script_runner.py <result_path>
-
-with a single JSON job on stdin. It never writes its answer to stdout (the
-candidate owns stdout and may close, spam or binary-corrupt it) -- the result
-goes to ``result_path`` and the parent reads the file.
-
-Why a second runner instead of reusing ``sandbox_runner.py``: the upstream
-runner's contract is "call function(*args) and JSON-compare the return value".
-MBPP and HumanEval ship their ground truth as *Python assert statements*, not
-as JSON argument/expected pairs, so there is no return value to compare. This
-runner executes the tests as code and classifies *how* they failed, which is
-what the labeling stage needs.
-
-Resource limits are imported from the upstream runner rather than duplicated.
+Results never go to stdout — the candidate owns stdout and may corrupt it.
 """
 
 from __future__ import annotations

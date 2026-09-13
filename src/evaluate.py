@@ -1,13 +1,6 @@
-"""Metrics, threshold selection, the too-good-to-be-true guard, and plots.
+"""Metrics, threshold selection, plots, and the suspicious-AUC guard.
 
-Every model in this repo -- majority, TF-IDF, static features, CodeBERT -- is
-scored through this one module, on the same splits, with the same threshold
-rule. That is the only way the comparison table means anything.
-
-Threshold rule: the decision threshold is chosen on **validation** by maximising
-F1 and then applied unchanged to test and to the held-out set. Picking the
-threshold on the set you report is a small, extremely common, and entirely
-real form of leakage.
+Threshold is picked on val and applied unchanged to test.
 """
 
 from __future__ import annotations
@@ -94,12 +87,7 @@ def best_f1_threshold(y_true: Sequence[int], scores: Sequence[float]) -> float:
 
 def check_suspicious(metrics: dict[str, Any], model_name: str, split: str,
                      allow: bool = False) -> None:
-    """Hard-stop on implausibly good results.
-
-    A held-out AUC above ~0.95 on this task would beat published code-reward
-    models trained on far more data. The overwhelmingly likely explanation is a
-    leak, so the pipeline refuses to report the number until someone has looked.
-    """
+    """Abort on an implausibly good result -- it is almost always a leak."""
     auc = metrics.get("auc")
     if auc is None or not np.isfinite(auc) or auc < config.SUSPICIOUS_AUC:
         return

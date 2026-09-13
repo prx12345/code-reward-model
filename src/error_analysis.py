@@ -1,21 +1,4 @@
-"""Error analysis -- specifically, testing one stated hypothesis.
-
-The hypothesis under test (stated before seeing results):
-
-    The classifier catches obvious breakage -- syntax errors, wrong API usage,
-    code that raises -- and misses subtle logic bugs: off-by-one, wrong edge
-    case, right shape and wrong answer.
-
-The execution stage already gives us exactly the split needed to test it. A
-candidate that fails with ``syntax_error`` or ``exception`` broke *visibly*. A
-candidate that fails with ``assertion_failure`` ran to completion and returned
-the wrong value -- that is the subtle-logic-bug bucket, by construction.
-
-So the test is: among truly-failing candidates, is the classifier's detection
-rate higher for the visible-breakage bucket than for the wrong-answer bucket?
-Reported with a two-proportion z-test so the answer is "yes/no and by how
-much", not a vibe.
-"""
+"""Does it catch obvious breakage but miss logic bugs? Two-proportion z-test."""
 
 from __future__ import annotations
 
@@ -120,8 +103,8 @@ def length_confound(rows: Sequence[dict[str, Any]],
                     scores: Sequence[float]) -> dict[str, Any]:
     """Is the model just reading code length?
 
-    A strong monotonic relationship between score and length would mean the
-    'reward model' is a length heuristic wearing a transformer.
+    A strong length-score relationship would mean this is a length heuristic
+    with extra steps.
     """
     from scipy.stats import spearmanr
 

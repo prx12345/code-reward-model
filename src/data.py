@@ -1,33 +1,6 @@
-"""Load MBPP and HumanEval and normalize them into one problem schema.
+"""Load MBPP and HumanEval, normalise both into one problem schema.
 
-Unified record (one per *problem*, not per candidate)::
-
-    problem_id          str   "mbpp/101", "humaneval/HumanEval_2"
-    benchmark           str   "mbpp" | "humaneval"
-    prompt_kind         str   "nl" (natural language) | "signature" (code stub)
-    classifier_prompt   str   what the CLASSIFIER sees as the problem statement
-    generation_prompt   str   what the GENERATOR model is asked to solve
-    entry_point         str   function the tests call
-    test_defs           str   scaffolding exec'd before the assertions
-    tests               list  assert statements, executed one at a time
-    reference_solution  str   the benchmark's own solution (sanity check only)
-    n_tests             int
-
-Two design decisions worth defending in an interview:
-
-1. **The generator prompt contains the test assertions; the classifier prompt
-   does not.** MBPP's task text ("Write a function to find the kth element in
-   the given array") does not pin down the signature -- the reference takes
-   ``(arr, n, k)``. Without the asserts, nearly every sample fails with a
-   ``TypeError`` on arity and the labels measure signature-guessing, not
-   correctness. Every published MBPP number is produced with the tests (or
-   three-shot examples) in the prompt for exactly this reason. The classifier,
-   however, must NOT see the assertions: they are the label source, and a model
-   that reads "assert kth_element(...) == 3" next to the code is doing test
-   execution by proxy rather than learning anything about the code.
-
-2. **HumanEval is loaded but never used for training.** It is the held-out set.
-   ``assert_humaneval_never_trained`` is called from the training script.
+HumanEval is the held-out set — assert_humaneval_never_trained() guards it.
 """
 
 from __future__ import annotations

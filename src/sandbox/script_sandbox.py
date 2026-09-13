@@ -1,36 +1,11 @@
-"""Parent-side controller for running candidate solutions against unit tests.
+"""Run a candidate against assert-style tests in a sandboxed subprocess.
 
-Extends the vendored :mod:`sandbox` harness (see ``PROVENANCE.md``) rather than
-replacing it. What is reused as-is: the resource-limit set (``RLIMIT_AS`` /
-``RLIMIT_CPU`` / ``RLIMIT_FSIZE`` / ``RLIMIT_NOFILE`` / ``RLIMIT_NPROC``),
-``python -I`` isolation, ``start_new_session`` plus ``killpg`` so a timed-out
-candidate cannot leave orphaned children behind.
+Extends the vendored harness (PROVENANCE.md), which only knew how to call a
+function and JSON-compare its return value. Adds the failure taxonomy, a
+disposable cwd per run, out-of-band results, and a network block.
 
-What this module adds, because the upstream harness could not do it:
-
-1. **Assert-based tests.** Upstream compares a JSON return value against an
-   expected JSON value. MBPP/HumanEval ground truth is Python assertions, so
-   the tests have to be *executed*, not compared.
-2. **A failure taxonomy.** Upstream reports ``ok`` / ``runtime_error``. The
-   label quality of this project depends on distinguishing a wrong answer
-   (``assertion_failure``) from code that never ran (``syntax_error``) from
-   code that hung (``timeout``) -- these are different kinds of bug and the
-   error analysis needs them apart.
-3. **A disposable working directory per run.** Upstream runs every candidate
-   in the shared ``/tmp``; two candidates that both write ``output.txt`` can
-   see each other's files, and thousands of runs leave litter. Each run here
-   gets its own ``TemporaryDirectory`` that is destroyed afterwards.
-4. **Out-of-band result delivery.** Upstream parses the child's stdout. A
-   candidate that prints, or closes fd 1, corrupts that channel. Here the
-   child writes JSON to a private file the candidate's working directory
-   cannot reach.
-5. **A network block** inside the child (see ``script_runner._disable_network``).
-
-THREAT MODEL (read this before trusting it): this is a robust *resource and
-accident* sandbox. It is not a security boundary. The child runs as the same
-uid with a readable filesystem and can defeat the Python-level network block
-via ``ctypes``. It is appropriate for code sampled from a 1.5B code model on a
-disposable Colab VM. It is not appropriate for code from an adversary.
+NOT a security boundary — same uid, readable fs. Fine for a 1.5B model on a
+throwaway VM, not for hostile code.
 """
 
 from __future__ import annotations

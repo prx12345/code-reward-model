@@ -1,4 +1,4 @@
-"""Data pipeline: normalization, entry-point inference, and the HumanEval guard."""
+"""Normalisation, entry-point inference, and the HumanEval guard."""
 
 import pytest
 

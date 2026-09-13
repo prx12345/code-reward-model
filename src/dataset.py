@@ -1,20 +1,4 @@
-"""Turn labeled candidates into train/val/test splits -- with hard leak guards.
-
-The single easiest way to fake a good result on this task is to split rows
-randomly. Eight candidates are sampled per problem, many of them near-identical;
-a random split puts siblings of a test row in the training set and the model
-scores beautifully by recognising the problem, not by judging the code.
-
-So: **splitting is by problem id, and an assertion enforces it.** Three guards
-run on every split, and each raises rather than warns:
-
-1. no ``problem_id`` appears in more than one split;
-2. no exact code string appears in more than one split;
-3. no HumanEval problem is in any training split.
-
-``LeakageError`` is deliberately not caught anywhere. If it fires, the run
-should die.
-"""
+"""Splits and leak guards. Split by problem_id, never by row — see README."""
 
 from __future__ import annotations
 
@@ -210,11 +194,9 @@ def assert_no_leakage(splits: Splits, strict_code: bool = False) -> None:
 
 
 def class_weights(rows: list[dict[str, Any]]) -> dict[str, float]:
-    """Positive-class weight for a weighted BCE loss, computed on TRAIN only.
+    """pos_weight = n_neg / n_pos, from TRAIN only.
 
-    ``pos_weight = n_negative / n_positive`` degenerates to ~1.0 on a balanced
-    set, so this is applied unconditionally rather than behind an "if the data
-    is skewed" branch -- fewer code paths, same behaviour.
+    Applied unconditionally -- it's ~1.0 when balanced, so no special case.
     """
     n_pos = sum(r["label"] for r in rows)
     n_neg = len(rows) - n_pos

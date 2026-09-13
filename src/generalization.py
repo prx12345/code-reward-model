@@ -1,25 +1,4 @@
-"""Does the classifier judge code, or does it recognise one model's style?
-
-A reward model trained on samples from a single generator has an obvious
-failure mode: instead of learning what correct code looks like, it learns what
-*that generator's* correct code looks like -- its indentation habits, its
-preferred idioms, its docstring style. That model is worthless the moment you
-point it at a different policy, which is exactly what a reward model is for.
-
-Two tests here:
-
-1. **Transfer.** Score candidates from a second, different-family generator
-   with the model trained on the first. A large AUC drop means the classifier
-   was partly fitting generator style.
-2. **Fingerprint probe.** Train a cheap TF-IDF classifier to predict *which
-   generator* produced a snippet, from the code alone. If that is easy
-   (AUC near 1.0), generator identity is trivially available in the input, and
-   any transfer drop in test 1 has an obvious mechanism. If it is hard, style
-   was never a plausible shortcut in the first place.
-
-Test 2 matters because test 1 alone is ambiguous: a drop could equally mean
-the second generator is simply harder to judge.
-"""
+"""Transfer to a second generator, plus a probe for whether style is readable."""
 
 from __future__ import annotations
 

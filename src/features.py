@@ -1,13 +1,4 @@
-"""Cheap static features over candidate code -- the second baseline.
-
-These exist to answer an uncomfortable question before the neural model is
-allowed to look good: *how much of "will this code pass?" is predictable from
-surface properties alone?* If a logistic regression on eleven numbers gets
-close to CodeBERT, the transformer is not earning its compute, and that belongs
-in the write-up rather than being quietly omitted.
-
-Everything here is computed without executing anything.
-"""
+"""Cheap static features over code. Baseline #2 — no execution involved."""
 
 from __future__ import annotations
 
