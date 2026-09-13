@@ -1,0 +1,67 @@
+{
+  "threshold": 0.4856,
+  "detection_by_outcome": {
+    "assertion_failure": {
+      "n": 51,
+      "mean_score": 0.4479,
+      "median_score": 0.3799,
+      "correctly_classified": 30,
+      "detection_rate": 0.5882
+    },
+    "exception": {
+      "n": 35,
+      "mean_score": 0.578,
+      "median_score": 0.5553,
+      "correctly_classified": 10,
+      "detection_rate": 0.2857
+    },
+    "pass": {
+      "n": 48,
+      "mean_score": 0.6495,
+      "median_score": 0.6167,
+      "correctly_classified": 35,
+      "detection_rate": 0.7292
+    },
+    "syntax_error": {
+      "n": 40,
+      "mean_score": 0.0042,
+      "median_score": 0.0035,
+      "correctly_classified": 40,
+      "detection_rate": 1.0
+    },
+    "timeout": {
+      "n": 5,
+      "mean_score": 0.783,
+      "median_score": 0.9366,
+      "correctly_classified": 1,
+      "detection_rate": 0.2
+    }
+  },
+  "hypothesis_test": {
+    "hypothesis": "classifier catches obvious breakage, misses subtle logic bugs",
+    "visible_breakage_outcomes": [
+      "syntax_error",
+      "exception",
+      "timeout",
+      "memory_exceeded"
+    ],
+    "subtle_failure_outcomes": [
+      "assertion_failure"
+    ],
+    "n_visible_breakage": 80,
+    "n_subtle_failures": 51,
+    "recall_visible_breakage": 0.6375,
+    "recall_subtle_failures": 0.5882,
+    "gap": 0.0493,
+    "z": 0.566,
+    "p_value": 0.571431,
+    "verdict": "NOT SUPPORTED: no significant difference between the two failure types at p<0.05"
+  },
+  "length_confound": {
+    "spearman_length_vs_score": 0.0645,
+    "p_length_vs_score": 0.391155,
+    "spearman_length_vs_label": 0.1012,
+    "p_length_vs_label": 0.177835,
+    "note": "If length-vs-score is much stronger than length-vs-label, the model is leaning on a heuristic the data does not support."
+  }
+}

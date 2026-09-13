@@ -1,0 +1,22 @@
+{
+  "train": {
+    "n_rows": 835,
+    "n_problems": 140,
+    "pass_rate": 0.2287
+  },
+  "val": {
+    "n_rows": 188,
+    "n_problems": 30,
+    "pass_rate": 0.2766
+  },
+  "test": {
+    "n_rows": 179,
+    "n_problems": 30,
+    "pass_rate": 0.2682
+  },
+  "humaneval_heldout": {
+    "n_rows": 0,
+    "n_problems": 0,
+    "pass_rate": null
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "tfidf_logreg": {
+    "vocabulary_size": 2583,
+    "top_positive_tokens": [
+      "return",
+      "] return",
+      ") :",
+      ":",
+      ": return",
+      ": result",
+      "return (",
+      "a =",
+      "b -",
+      ": if",
+      "n -",
+      "-",
+      "< =",
+      "c return",
+      "1 if"
+    ],
+    "top_negative_tokens": [
+      "pass",
+      "undefined_helper_fn (",
+      "undefined_helper_fn",
+      "= undefined_helper_fn",
+      "_ =",
+      "_",
+      ") pass",
+      ": pass",
+      "( 1",
+      ") _",
+      "1 )",
+      ") res",
+      ") result",
+      "s",
+      "1 pass"
+    ]
+  },
+  "static_logreg": {
+    "coefficients": {
+      "n_chars": 0.0171,
+      "n_lines": -0.5895,
+      "n_nonblank_lines": -0.2076,
+      "parses": 1.4441,
+      "n_branches": 0.0229,
+      "n_loops": 0.1689,
+      "n_functions": -0.1657,
+      "n_returns": 1.3315,
+      "max_indent": -0.0405,
+      "n_comments": 0.0,
+      "has_docstring": 0.0,
+      "n_try": 0.0,
+      "n_imports": 0.1811,
+      "n_calls": -0.4217,
+      "n_names": 0.9415,
+      "is_recursive": -0.2076,
+      "has_pass_only_body": -0.5186,
+      "n_todo_markers": 0.0
+    }
+  }
+}

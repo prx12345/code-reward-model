@@ -1,0 +1,130 @@
+{
+  "thresholds": {
+    "majority": 0.22874251497005987,
+    "static_logreg": 0.4856015306514858,
+    "tfidf_logreg": 0.5388749756001934
+  },
+  "metrics": {
+    "majority": {
+      "val": {
+        "n": 188,
+        "positive_rate": 0.2766,
+        "auc": 0.5,
+        "average_precision": 0.2766,
+        "accuracy": 0.2766,
+        "precision": 0.2766,
+        "recall": 1.0,
+        "f1": 0.4333,
+        "brier": 0.2024,
+        "ece": 0.0479,
+        "threshold": 0.2287,
+        "confusion": {
+          "tn": 0,
+          "fp": 136,
+          "fn": 0,
+          "tp": 52
+        }
+      },
+      "test": {
+        "n": 179,
+        "positive_rate": 0.2682,
+        "auc": 0.5,
+        "average_precision": 0.2682,
+        "accuracy": 0.2682,
+        "precision": 0.2682,
+        "recall": 1.0,
+        "f1": 0.4229,
+        "brier": 0.1978,
+        "ece": 0.0394,
+        "threshold": 0.2287,
+        "confusion": {
+          "tn": 0,
+          "fp": 131,
+          "fn": 0,
+          "tp": 48
+        }
+      }
+    },
+    "static_logreg": {
+      "val": {
+        "n": 188,
+        "positive_rate": 0.2766,
+        "auc": 0.832,
+        "average_precision": 0.6024,
+        "accuracy": 0.7074,
+        "precision": 0.4848,
+        "recall": 0.9231,
+        "f1": 0.6358,
+        "brier": 0.1745,
+        "ece": 0.1483,
+        "threshold": 0.4856,
+        "confusion": {
+          "tn": 85,
+          "fp": 51,
+          "fn": 4,
+          "tp": 48
+        }
+      },
+      "test": {
+        "n": 179,
+        "positive_rate": 0.2682,
+        "auc": 0.755,
+        "average_precision": 0.5003,
+        "accuracy": 0.648,
+        "precision": 0.4118,
+        "recall": 0.7292,
+        "f1": 0.5263,
+        "brier": 0.2231,
+        "ece": 0.1894,
+        "threshold": 0.4856,
+        "confusion": {
+          "tn": 81,
+          "fp": 50,
+          "fn": 13,
+          "tp": 35
+        }
+      }
+    },
+    "tfidf_logreg": {
+      "val": {
+        "n": 188,
+        "positive_rate": 0.2766,
+        "auc": 0.7401,
+        "average_precision": 0.4757,
+        "accuracy": 0.6596,
+        "precision": 0.4348,
+        "recall": 0.7692,
+        "f1": 0.5556,
+        "brier": 0.228,
+        "ece": 0.2253,
+        "threshold": 0.5389,
+        "confusion": {
+          "tn": 84,
+          "fp": 52,
+          "fn": 12,
+          "tp": 40
+        }
+      },
+      "test": {
+        "n": 179,
+        "positive_rate": 0.2682,
+        "auc": 0.7358,
+        "average_precision": 0.4432,
+        "accuracy": 0.6983,
+        "precision": 0.4531,
+        "recall": 0.6042,
+        "f1": 0.5179,
+        "brier": 0.221,
+        "ece": 0.212,
+        "threshold": 0.5389,
+        "confusion": {
+          "tn": 96,
+          "fp": 35,
+          "fn": 19,
+          "tp": 29
+        }
+      }
+    }
+  },
+  "generator_tag": "devfixture-mutants"
+}

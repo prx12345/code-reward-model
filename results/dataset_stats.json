@@ -1,0 +1,50 @@
+{
+  "mbpp": {
+    "n_problems": 963,
+    "benchmark": "mbpp",
+    "prompt_kind": "nl",
+    "prompt_chars_mean": 78.5,
+    "prompt_chars_median": 77,
+    "prompt_chars_max": 249,
+    "reference_chars_mean": 175.6,
+    "reference_chars_max": 1282,
+    "tests_per_problem_mean": 3.0,
+    "problems_with_test_defs": 2
+  },
+  "humaneval": {
+    "n_problems": 164,
+    "benchmark": "humaneval",
+    "prompt_kind": "signature",
+    "prompt_chars_mean": 448.5,
+    "prompt_chars_median": 394,
+    "prompt_chars_max": 1358,
+    "reference_chars_mean": 631.5,
+    "reference_chars_max": 1993,
+    "tests_per_problem_mean": 1.0,
+    "problems_with_test_defs": 164
+  },
+  "mbpp_reference_validation": {
+    "n_problems": 963,
+    "reference_pass_rate": 0.999,
+    "outcome_counts": {
+      "pass": 962,
+      "timeout": 1
+    },
+    "n_failures": 1,
+    "failures": [
+      [
+        "mbpp/123",
+        "timeout"
+      ]
+    ]
+  },
+  "humaneval_reference_validation": {
+    "n_problems": 164,
+    "reference_pass_rate": 1.0,
+    "outcome_counts": {
+      "pass": 164
+    },
+    "n_failures": 0,
+    "failures": []
+  }
+}

@@ -1,0 +1,26 @@
+# Generated data. Everything here is reproducible from scripts/ and is large.
+data/raw/
+data/interim/
+data/processed/
+
+# Model checkpoints (CodeBERT fine-tunes are ~500MB each).
+models/
+
+# Results are committed deliberately (see results/README.md) EXCEPT for the
+# score dumps, which are large and regenerable.
+results/scores/
+results/_pipeline_smoke_test/scores/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
